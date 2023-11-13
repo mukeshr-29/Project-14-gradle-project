@@ -30,8 +30,9 @@ pipeline{
         stage('sonarqube analysis'){
             steps{
                 script{
-                    withSonarQube(credentialsId: 'sonarqube') {
-                        sh './gradlew sonarqube'
+                    def scannerHome = tool 'SonarQubeScanner'
+                    withEnv(["PATH+SONAR=$scannerHome/bin"]) {
+                        sh "${scannerHome}/bin/sonar-scanner"
                     }
                     timeout(time: 10, unit: 'MINUTES'){
                         def qg = waitForQualityGate()
