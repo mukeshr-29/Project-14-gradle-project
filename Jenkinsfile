@@ -17,12 +17,16 @@ pipeline{
         }
         stage('gradle compile'){
             steps{
-                sh './gradlew compileJava'
+                script{
+                    sh './gradlew compileJava'
+                }
             }
         }
         stage('testgradle'){
             steps{
-                sh './gradlew test'
+                script{
+                    sh './gradlew test'
+                }
             }
         }
     }
