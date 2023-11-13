@@ -30,7 +30,8 @@ pipeline{
         stage('sonarqube analysis'){
             steps{
                 script{
-                    withSonarQubeEnv(credentialsId: 'sonarqube') {
+                    withSonarQube(credentialsId: 'sonarqube') {
+                        sh 'chmod +x gradlew'
                         sh './gradlew sonarqube'
                     }
                     timeout(time: 10, unit: 'MINUTES'){
