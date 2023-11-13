@@ -30,7 +30,7 @@ pipeline{
         stage('sonarqube analysis'){
             steps{
                 script{
-                    withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonar_scanner') {
+                    withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonarqube') {
                         sh './gradlew sonarqube'
                     }
                     timeout(time: 10, unit: 'MINUTES'){
