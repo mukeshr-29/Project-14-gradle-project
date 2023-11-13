@@ -17,16 +17,14 @@ pipeline{
         }
         stage('gradle compile'){
             steps{
-                script{
-                    sh './gradlew compileJava'
-                }
+                sh 'chmod +x gradlew'
+                sh './gradlew compileJava'
             }
         }
         stage('testgradle'){
             steps{
-                script{
-                    sh './gradlew test'
-                }
+                sh 'chmod +x gradlew'
+                sh './gradlew test'
             }
         }
     }
