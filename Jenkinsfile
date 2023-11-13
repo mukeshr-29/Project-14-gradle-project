@@ -31,7 +31,7 @@ pipeline{
             steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonar_scanner') {
-                        sh 'sonar-scanner'
+                        sh './gradlew sonarqube'
                     }
                     timeout(time: 10, unit: 'MINUTES'){
                         def qg = waitForQualityGate()
