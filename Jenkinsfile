@@ -30,9 +30,8 @@ pipeline{
         stage('sonarqube analysis'){
             steps{
                 script{
-                    def scannerHome = tool 'sonar_scanner'
-                    withEnv(["PATH+SONAR=$scannerHome/bin"]) {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                    withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonar_scanner') {
+                        sh 'sonar-scanner'
                     }
                     timeout(time: 10, unit: 'MINUTES'){
                         def qg = waitForQualityGate()
