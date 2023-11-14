@@ -48,5 +48,11 @@ pipeline{
                 sh './gradlew build'
             }
         }
+        stage('dependency check'){
+            steps{
+                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP Check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
     }
 }
