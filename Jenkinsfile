@@ -27,21 +27,21 @@ pipeline{
                 sh './gradlew test'
             }
         }
-        // stage('sonarqube analysis'){
-        //     steps{
-        //         script{
-        //             withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonarqube') {
-        //                 sh 'chmod +x gradlew'
-        //                 sh './gradlew sonarqube'
-        //             }
-        //             timeout(time: 10, unit: 'MINUTES'){
-        //                 def qg = waitForQualityGate()
-        //                 if (qg.status != 'OK'){
-        //                     error "pipeline is aborted due to qualitygate failure: ${qg.status}"
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage('sonarqube analysis'){
+            steps{
+                script{
+                    withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonarqube') {
+                        sh 'chmod +x gradlew'
+                        sh './gradlew sonarqube'
+                    }
+                    timeout(time: 10, unit: 'MINUTES'){
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK'){
+                            error "pipeline is aborted due to qualitygate failure: ${qg.status}"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
