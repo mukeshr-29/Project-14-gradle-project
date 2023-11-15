@@ -57,10 +57,10 @@ pipeline{
         stage('build & push to nexus'){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'nexus_docker', variable: 'nexus_docker-pass')]){
+                    withCredentials([string(credentialsId: 'nexus_docker', variable: 'nexus_docker')]){
                         sh '''
                             docker build -t 3.88.197.117:8083/gradle-project:latest .
-                            docker login -u admin -p $nexus_docker-pass 3.88.197.117:8083
+                            docker login -u admin -p $nexus_docker 3.88.197.117:8083
                             docker push 3.88.197.117:8083/gradle-project:latest
                         '''
                     }
