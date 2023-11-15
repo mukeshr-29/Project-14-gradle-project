@@ -54,5 +54,27 @@ pipeline{
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
+        stage('build & push to nexus'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus_docker', variable: 'nexus_docker-pass')]){
+                        sh '''
+                            docker build -t 3.88.197.117:8083/gradle-project:latest .
+                            docker login -u admin -p $nexus_docker-pass 3.88.197.117:8083
+                            docker push 3.88.197.117:8083/gradle-project:latest
+                        '''
+                    }
+                }
+            }
+        }
+        stage('deploy to container'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus_docker', variable: 'nexus_docker-pass')]){
+                        sh 'docker run -d --name gradle -p 9090:8080 3.88.197.117:8083/gradle-project:latest'
+                    }
+                }
+            }
+        }
     }
 }
