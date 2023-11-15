@@ -60,7 +60,7 @@ pipeline{
                     withCredentials([string(credentialsId: 'nexus_docker', variable: 'nexus_docker-pass')]){
                         sh '''
                             docker build -t 3.88.197.117:8083/gradle-project:latest .
-                            echo $nexus_docker-pass | docker login -u admin --mukesh123 3.88.197.117:8083
+                            echo $nexus_docker-pass | docker login -u admin --password-stdin 3.88.197.117:8083
                             docker push 3.88.197.117:8083/gradle-project:latest
                         '''
                     }
